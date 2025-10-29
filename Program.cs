@@ -7,6 +7,7 @@ using BankLink.Services.Implementations;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddScoped<IMovimientoService, MovimientoService>();
 builder.Services.AddScoped<ICuentaService, CuentaService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
