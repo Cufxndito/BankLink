@@ -1,10 +1,13 @@
 using BankLink.Data;
 using Microsoft.EntityFrameworkCore;
+using BankLink.Services.Interfaces;
+using BankLink.Services.Implementations;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddScoped<IClienteService, ClienteService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
