@@ -4,12 +4,15 @@ using System.Threading.Tasks;
 
 namespace BankLink.Services.Interfaces
 {
-    public interface IClienteService
+    public interface ICuentaService
     {
-        Task<IEnumerable<Cliente>> GetAllAsync();
-        Task<Cliente?> GetByIdAsync(int id);
-        Task<Cliente> CreateAsync(Cliente cliente);
-        Task<Cliente?> UpdateAsync(int id, Cliente cliente);
+        Task<IEnumerable<Cuenta>> GetAllAsync();
+        Task<Cuenta?> GetByIdAsync(int id);
+        Task<IEnumerable<Cuenta>> GetByClienteIdAsync(int clienteId);
+        Task<Cuenta> CreateAsync(Cuenta cuenta);
+        Task<Cuenta?> UpdateAsync(int id, Cuenta cuenta);
         Task<bool> DeleteAsync(int id);
+        Task<bool> CambiarEstadoAsync(int id, bool activa);
     }
 }
+
