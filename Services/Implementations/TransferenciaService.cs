@@ -21,7 +21,7 @@ namespace BankLink.Services.Implementations
             _httpClient = httpClient;
         }
 
-        // 🔹 Listar todas las transferencias
+        // Listar todas las transferencias
         public async Task<IEnumerable<Transferencia>> GetAllAsync()
         {
             return await _context.Transferencias
@@ -31,7 +31,7 @@ namespace BankLink.Services.Implementations
                 .ToListAsync();
         }
 
-        // 🔹 Obtener transferencia por ID
+        // Obtener transferencia por ID
         public async Task<Transferencia?> GetByIdAsync(int id)
         {
             return await _context.Transferencias
@@ -41,7 +41,7 @@ namespace BankLink.Services.Implementations
                 .FirstOrDefaultAsync(t => t.Id == id);
         }
 
-        // 🔹 Transferencia interna (dentro del mismo banco)
+        // Transferencia interna
         public async Task<Transferencia> TransferirInternaAsync(int cuentaOrigenId, int cuentaDestinoId, decimal monto, string descripcion)
         {
             // usamos una transacción para asegurar consistencia
@@ -109,7 +109,7 @@ namespace BankLink.Services.Implementations
             }
         }
 
-        // 🔹 Transferencia externa (a otro banco)
+        // Transferencia externa
         public async Task<string> TransferirExternaAsync(int cuentaOrigenId, string numeroCuentaDestinoExterna, decimal monto, string descripcion, string urlBancoDestino)
         {
             using var transaction = await _context.Database.BeginTransactionAsync();
@@ -142,8 +142,6 @@ namespace BankLink.Services.Implementations
                 var json = JsonSerializer.Serialize(transferenciaData);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                // opcional: header de autorización si usan token
-                // _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "token_compartido");
 
                 var response = await _httpClient.PostAsync($"{urlBancoDestino}/api/transferencias/recibir", content);
 

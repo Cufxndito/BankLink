@@ -5,82 +5,56 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BankLink.Services.Implementations
 {
-    public class CuentaService : ICuentaService
+    public class ClienteService : IClienteService
     {
         private readonly BankLinkContext _context;
 
-        public CuentaService(BankLinkContext context)
+        public ClienteService(BankLinkContext context)
         {
             _context = context;
         }
 
-        public async Task<IEnumerable<Cuenta>> GetAllAsync()
+        public async Task<IEnumerable<Cliente>> GetAllAsync()
         {
-            // Incluimos datos del cliente propietario
-            return await _context.Cuentas
-                .Include(c => c.Cliente)
-                .ToListAsync();
+            return await _context.Clientes.ToListAsync();
         }
 
-        public async Task<Cuenta?> GetByIdAsync(int id)
+        public async Task<Cliente?> GetByIdAsync(int id)
         {
-            return await _context.Cuentas
-                .Include(c => c.Cliente)
-                .FirstOrDefaultAsync(c => c.Id == id);
+            return await _context.Clientes.FindAsync(id);
         }
 
-        public async Task<IEnumerable<Cuenta>> GetByClienteIdAsync(int clienteId)
+        public async Task<Cliente> CreateAsync(Cliente cliente)
         {
-            return await _context.Cuentas
-                .Where(c => c.ClienteId == clienteId)
-                .Include(c => c.Cliente)
-                .ToListAsync();
-        }
-
-        public async Task<Cuenta> CreateAsync(Cuenta cuenta)
-        {
-            // Validar que el cliente exista antes de crear la cuenta
-            var cliente = await _context.Clientes.FindAsync(cuenta.ClienteId);
-            if (cliente == null)
-                throw new Exception("El cliente asociado no existe.");
-
-            _context.Cuentas.Add(cuenta);
+            _context.Clientes.Add(cliente);
             await _context.SaveChangesAsync();
-            return cuenta;
+            return cliente;
         }
 
-        public async Task<Cuenta?> UpdateAsync(int id, Cuenta cuenta)
+        public async Task<Cliente?> UpdateAsync(int id, Cliente cliente)
         {
-            var existing = await _context.Cuentas.FindAsync(id);
-            if (existing == null)
+            var existente = await _context.Clientes.FindAsync(id);
+            if (existente == null)
                 return null;
 
-            existing.NumeroCuenta = cuenta.NumeroCuenta;
-            existing.TipoCuenta = cuenta.TipoCuenta;
-            existing.Activa = cuenta.Activa;
+            existente.Nombre = cliente.Nombre;
+            existente.Apellido = cliente.Apellido;
+            existente.Dni = cliente.Dni;
+            existente.Direccion = cliente.Direccion;
+            existente.Telefono = cliente.Telefono;
+            existente.Email = cliente.Email;
 
             await _context.SaveChangesAsync();
-            return existing;
+            return existente;
         }
 
         public async Task<bool> DeleteAsync(int id)
         {
-            var cuenta = await _context.Cuentas.FindAsync(id);
-            if (cuenta == null)
+            var cliente = await _context.Clientes.FindAsync(id);
+            if (cliente == null)
                 return false;
 
-            _context.Cuentas.Remove(cuenta);
-            await _context.SaveChangesAsync();
-            return true;
-        }
-
-        public async Task<bool> CambiarEstadoAsync(int id, bool activa)
-        {
-            var cuenta = await _context.Cuentas.FindAsync(id);
-            if (cuenta == null)
-                return false;
-
-            cuenta.Activa = activa;
+            _context.Clientes.Remove(cliente);
             await _context.SaveChangesAsync();
             return true;
         }

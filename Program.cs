@@ -12,6 +12,7 @@ builder.Services.AddDbContext<BankLinkContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add services to the container.
+builder.Services.AddScoped<IClienteService, ClienteService>();
 builder.Services.AddScoped<IBancoExternoService, BancoExternoService>();
 builder.Services.AddHttpClient<ITransferenciaService, TransferenciaService>();
 builder.Services.AddScoped<IMovimientoService, MovimientoService>();
