@@ -23,9 +23,9 @@ namespace BankLink.Models
         // Relación: una cuenta pertenece a un cliente
         [ForeignKey("Cliente")]
         public int ClienteId { get; set; }
-        public Cliente Cliente { get; set; }
+        public Cliente? Cliente { get; set; }
 
         // Relación: una cuenta tiene muchos movimientos
-        public ICollection<Movimiento> Movimientos { get; set; }
+        public ICollection<Movimiento>? Movimientos { get; set; } = new List<Movimiento>();
     }
 }
