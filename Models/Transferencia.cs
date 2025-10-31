@@ -9,16 +9,16 @@ namespace BankLink.Models
         public int Id { get; set; }
 
         [ForeignKey("CuentaOrigen")]
-        public int CuentaOrigenId { get; set; }
-        public Cuenta CuentaOrigen { get; set; }
+        public int? CuentaOrigenId { get; set; }
+        public Cuenta? CuentaOrigen { get; set; }
 
         [ForeignKey("CuentaDestino")]
         public int? CuentaDestinoId { get; set; } // Puede ser null si va a banco externo
-        public Cuenta CuentaDestino { get; set; }
+        public Cuenta? CuentaDestino { get; set; }
 
         [ForeignKey("BancoExterno")]
         public int? BancoExternoId { get; set; } // null si es transferencia interna
-        public BancoExterno BancoExterno { get; set; }
+        public BancoExterno? BancoExterno { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal Monto { get; set; }
@@ -27,9 +27,9 @@ namespace BankLink.Models
         public DateTime Fecha { get; set; } = DateTime.Now;
 
         [Required, MaxLength(20)]
-        public string TipoTransferencia { get; set; } // "Enviada" o "Recibida"
+        public string TipoTransferencia { get; set; } = string.Empty; // "Enviada" o "Recibida"
 
         [MaxLength(200)]
-        public string Descripcion { get; set; }
+        public string Descripcion { get; set; } = string.Empty;
     }
 }

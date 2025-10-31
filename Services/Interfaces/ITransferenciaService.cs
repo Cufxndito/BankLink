@@ -6,19 +6,22 @@ namespace BankLink.Services.Interfaces
 {
     public interface ITransferenciaService
     {
-        // 🔹 Listar todas las transferencias
+        // Listar todas las transferencias
         Task<IEnumerable<Transferencia>> GetAllAsync();
 
-        // 🔹 Obtener una transferencia por ID
+        // Obtener una transferencia por ID
         Task<Transferencia?> GetByIdAsync(int id);
 
-        // 🔹 Transferencia entre cuentas del mismo banco
+        // Transferencia entre cuentas del mismo banco
         Task<Transferencia> TransferirInternaAsync(int cuentaOrigenId, int cuentaDestinoId, decimal monto, string descripcion);
 
-        // 🔹 Transferencia hacia otro banco
+        // Transferencia hacia otro banco
         Task<string> TransferirExternaAsync(int cuentaOrigenId, string numeroCuentaDestinoExterna, decimal monto, string descripcion, string urlBancoDestino);
 
-        // 🔹 Eliminar (opcional)
+        // Recibir transferencia desde otro banco externo
+        Task<string> RecibirExternaAsync(string numeroCuentaDestino, decimal monto, string descripcion, string bancoOrigen);
+
+        // Eliminar (opcional)
         Task<bool> DeleteAsync(int id);
     }
 }

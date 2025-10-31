@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using BankLink.Services.Interfaces;
 using BankLink.Models;
+using BankLink.Models.DTOs;
 
 namespace BankLink.Controllers
 {
@@ -15,7 +16,7 @@ namespace BankLink.Controllers
             _transferenciaService = transferenciaService;
         }
 
-        // GET: api/transferencias
+        // 🔹 GET: api/transferencias
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -23,7 +24,7 @@ namespace BankLink.Controllers
             return Ok(transferencias);
         }
 
-        // GET: api/transferencias/5
+        // 🔹 GET: api/transferencias/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -34,7 +35,7 @@ namespace BankLink.Controllers
             return Ok(transferencia);
         }
 
-        // POST: api/transferencias/interna
+        // 🔹 POST: api/transferencias/interna
         [HttpPost("interna")]
         public async Task<IActionResult> TransferirInterna([FromBody] TransferenciaRequestInterna request)
         {
@@ -59,7 +60,7 @@ namespace BankLink.Controllers
             }
         }
 
-        // POST: api/transferencias/externa
+        // 🔹 POST: api/transferencias/externa
         [HttpPost("externa")]
         public async Task<IActionResult> TransferirExterna([FromBody] TransferenciaRequestExterna request)
         {
@@ -81,7 +82,28 @@ namespace BankLink.Controllers
             }
         }
 
-        // DELETE: api/transferencias/5
+        // 🔹 POST: api/transferencias/recibir
+        [HttpPost("recibir")]
+        public async Task<IActionResult> RecibirTransferenciaExterna([FromBody] TransferenciaExternaRequest request)
+        {
+            try
+            {
+                var mensaje = await _transferenciaService.RecibirExternaAsync(
+                    request.NumeroCuentaDestino,
+                    request.Monto,
+                    request.Descripcion,
+                    request.BancoOrigen
+                );
+
+                return Ok(new { mensaje });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { mensaje = ex.Message });
+            }
+        }
+
+        // 🔹 DELETE: api/transferencias/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -93,7 +115,7 @@ namespace BankLink.Controllers
         }
     }
 
-    // DTOs para las solicitudes POST
+    // DTOs internos
     public class TransferenciaRequestInterna
     {
         public int CuentaOrigenId { get; set; }

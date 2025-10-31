@@ -19,6 +19,7 @@ namespace BankLink.Services.Implementations
             // Incluimos datos del cliente propietario
             return await _context.Cuentas
                 .Include(c => c.Cliente)
+                .Include(c => c.Movimientos)
                 .ToListAsync();
         }
 
@@ -26,6 +27,7 @@ namespace BankLink.Services.Implementations
         {
             return await _context.Cuentas
                 .Include(c => c.Cliente)
+                .Include(c => c.Movimientos)
                 .FirstOrDefaultAsync(c => c.Id == id);
         }
 
