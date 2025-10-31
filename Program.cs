@@ -4,11 +4,19 @@ using BankLink.Services.Interfaces;
 using BankLink.Services.Implementations;
 
 
+
+
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddDbContext<BankLinkContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 // Add services to the container.
+builder.Services.AddScoped<IBancoExternoService, BancoExternoService>();
+builder.Services.AddHttpClient<ITransferenciaService, TransferenciaService>();
 builder.Services.AddScoped<IMovimientoService, MovimientoService>();
 builder.Services.AddScoped<ICuentaService, CuentaService>();
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
