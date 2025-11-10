@@ -8,7 +8,7 @@ namespace BankLink.Models
         public int Id { get; set; }
 
         [Required, MaxLength(100)]
-        public string NombreBanco { get; set; }
+        public string NombreBanco { get; set; } 
 
         [Required, MaxLength(20)]
         public string CodigoIdentificacion { get; set; }

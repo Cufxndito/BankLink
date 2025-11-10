@@ -174,7 +174,6 @@ namespace BankLink.Services.Implementations
         }
 
         // Recibir transferencia externa (desde otro banco)
-// 🔹 Recibir transferencia externa (desde otro banco)
 public async Task<string> RecibirExternaAsync(string numeroCuentaDestino, decimal monto, string descripcion, string bancoOrigen)
 {
     var cuentaDestino = await _context.Cuentas.FirstOrDefaultAsync(c => c.NumeroCuenta == numeroCuentaDestino);

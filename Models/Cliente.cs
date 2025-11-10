@@ -8,7 +8,7 @@ namespace BankLink.Models
         public int Id { get; set; }
 
         [Required, MaxLength(50)]
-        public string Nombre { get; set; }
+        public string Nombre { get; set; } 
 
         [Required, MaxLength(50)]
         public string Apellido { get; set; }
@@ -26,6 +26,6 @@ namespace BankLink.Models
         public string Email { get; set; }
 
         // Relación: un cliente puede tener muchas cuentas
-        public ICollection<Cuenta> Cuentas { get; set; }
+        public ICollection<Cuenta> Cuentas { get; set; } = new List<Cuenta>();
     }
 }

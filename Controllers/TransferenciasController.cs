@@ -16,7 +16,7 @@ namespace BankLink.Controllers
             _transferenciaService = transferenciaService;
         }
 
-        // 🔹 GET: api/transferencias
+        // GET: api/transferencias
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -24,7 +24,7 @@ namespace BankLink.Controllers
             return Ok(transferencias);
         }
 
-        // 🔹 GET: api/transferencias/5
+        // GET: api/transferencias/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -35,7 +35,7 @@ namespace BankLink.Controllers
             return Ok(transferencia);
         }
 
-        // 🔹 POST: api/transferencias/interna
+        // POST: api/transferencias/interna
         [HttpPost("interna")]
         public async Task<IActionResult> TransferirInterna([FromBody] TransferenciaRequestInterna request)
         {
@@ -60,7 +60,7 @@ namespace BankLink.Controllers
             }
         }
 
-        // 🔹 POST: api/transferencias/externa
+        // POST: api/transferencias/externa
         [HttpPost("externa")]
         public async Task<IActionResult> TransferirExterna([FromBody] TransferenciaRequestExterna request)
         {
@@ -82,7 +82,7 @@ namespace BankLink.Controllers
             }
         }
 
-        // 🔹 POST: api/transferencias/recibir
+        // POST: api/transferencias/recibir
         [HttpPost("recibir")]
         public async Task<IActionResult> RecibirTransferenciaExterna([FromBody] TransferenciaExternaRequest request)
         {
@@ -103,7 +103,20 @@ namespace BankLink.Controllers
             }
         }
 
-        // 🔹 DELETE: api/transferencias/5
+        // GET: api/transferencias/validar
+        [HttpGet("validar")]
+        public IActionResult ValidarConexion()
+        {
+            return Ok(new
+            {
+                banco = "BankLink",
+                codigo = "BKL",
+                estado = "OK",
+                mensaje = "BankLink operativo y listo para recibir transferencias ✅"
+            });
+        }
+
+        // DELETE: api/transferencias/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

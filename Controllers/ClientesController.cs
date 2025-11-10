@@ -36,14 +36,16 @@ namespace BankLink.Controllers
 
         // POST: api/Clientes
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] Cliente nuevoCliente)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+        [HttpPost]
+public async Task<IActionResult> Create([FromBody] Cliente cliente)
+{
+    if (cliente == null)
+        return BadRequest("Datos del cliente no válidos.");
 
-            var creado = await _clienteService.CreateAsync(nuevoCliente);
-            return CreatedAtAction(nameof(GetById), new { id = creado.Id }, creado);
-        }
+    var nuevoCliente = await _clienteService.CreateAsync(cliente);
+    return CreatedAtAction(nameof(GetById), new { id = nuevoCliente.Id }, nuevoCliente);
+}
+
 
         // PUT: api/Clientes/5
         [HttpPut("{id}")]

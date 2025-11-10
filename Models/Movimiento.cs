@@ -13,7 +13,7 @@ namespace BankLink.Models
         public Cuenta Cuenta { get; set; }
 
         [Required, MaxLength(30)]
-        public string TipoMovimiento { get; set; } // "Depósito", "Retiro", "Transferencia Enviada", "Transferencia Recibida"
+        public string TipoMovimiento { get; set; } 
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal Monto { get; set; }
